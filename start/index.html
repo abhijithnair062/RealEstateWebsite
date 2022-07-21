@@ -1,0 +1,571 @@
+<?php
+  session_start();
+  $connect=mysqli_connect("localhost:3308","root","","pixelinkz");
+ function fill_city($connect)  
+ {  
+      $output = '';  
+      $sql = "SELECT CityName FROM city";  
+      $result = mysqli_query($connect, $sql);  
+      while($row = mysqli_fetch_array($result))  
+      {  
+           $output .= '<option>'.$row["CityName"].'</option>';  
+      }  
+      return $output;  
+ } 
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+  <link rel="stylesheet" href="style.css">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <title>PIXELINKZ</title>
+  <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="aos.css" />
+  <link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+  <link href="vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
+  <link href="css/sb-admin.css" rel="stylesheet">
+  <link href="nouislider.min.css" rel="stylesheet">
+  <script src="nouislider.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="awesomplete.css">
+  <script type="text/javascript" src="awesomplete.min.js"></script>
+  <script src="wNumb.js"></script>
+</head>
+
+
+<body id="page-top">
+  <!-- Navigation-->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
+    <a class="navbar-brand" href="index.php">PIXELINKZ</a>
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarResponsive">
+      <ul class="navbar-nav mx-auto">
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle mr-lg-2" id="messagesDropdown" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+            BUY
+          </a>
+          <div class="dropdown-menu" aria-labelledby="messagesDropdown">
+            <a class="dropdown-item" id="bflat" href="#">
+              <strong>Flats</strong>
+            </a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" id="bhouse" href="#">
+              <strong>House/Villa</strong>
+            </a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" id="bplot" href="#">
+              <strong>Plots</strong>
+            </a>
+          </div>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle mr-lg-2" id="messagesDropdown" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <i class="fa fa-building" aria-hidden="true"></i>
+            SELL
+          </a>
+          <div class="dropdown-menu" aria-labelledby="messagesDropdown">
+            <a class="dropdown-item" id="sl1" href="forms1/sell/sss.php">
+              <strong>Sell your Property</strong>
+            </a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" id="sl2" href="forms1/sell/sss.php">
+              <strong>Rent your Property</strong>
+            </a>
+          </div>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle mr-lg-2" id="messagesDropdown" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <i class="fa fa-home" aria-hidden="true"></i>
+                        RENT
+          </a>
+          <div class="dropdown-menu" aria-labelledby="messagesDropdown">
+            <a class="dropdown-item" id="rflat" href="#">
+              <strong>Flats</strong>
+            </a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" id="rhouse" href="#">
+              <strong>House/Villa</strong>
+            </a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" id="rplot" href="#">
+              <strong>Plots</strong>
+            </a>
+          </div>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#services">SERVICES</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#aboutus">ABOUT US</a>
+        </li>
+      </ul>
+      <ul class="navbar-nav ml-auto">
+        <?php if(!isset($_SESSION['login'])): ?>
+        <li class="nav-item">
+          <a class="nav-link" id="notlogged" data-toggle="modal" data-target="#exampleModal">
+            <i class="fa fa-fw fa-sign-out"></i>LogIN</a>
+        </li>
+        <?php else: ?>
+        <li style="color: white; font-size: 18px; padding: 5px;"><?=$_SESSION['message']?></li>
+        <li class="nav-item">
+          <a class="nav-link" href="destroy.php">
+            <i class="fa fa-fw fa-sign-out"></i>LogOUT</a>
+        </li>
+        <?php endif; ?>
+      </ul>
+    </div>
+  </nav>
+  <div style="padding: 0;">
+    <div class="container-fluid" data-spy="scroll" data-target="#mainNav" data-offset="0" style="padding: 0;">
+      <section id="main">
+      <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+      <div class="carousel-inner">
+        <div class="carousel-item active">
+          <img class="d-block w-100" src="b1.jpg" style="height: 100vh;">
+        </div>
+        <div class="carousel-item">
+          <img class="d-block w-100" src="b2.jpg" style="height: 100vh;">
+        </div>
+        <div class="carousel-item">
+          <img class="d-block w-100" src="b3.jpg" style="height: 100vh;">
+        </div>
+      </div>
+        <div class="carousel-caption" style="top:35%;">
+          <div class="col-lg-12">
+          <div class="row" style="width: 100%;" data-aos="zoom-in-up">
+          <form method="get" id="srchbox" style="width: 100%; padding-bottom: 50px;">
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+             <div class="btn-group" style="height: 50px;">
+                <button type="button" class="form-control btn btn-warning dropdown-toggle" data-toggle="dropdown" style="cursor: pointer;"><span id="dropT">Buy</span><span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" id="drop" role="menu" style="background-color: #ffb300; text-align: center;">
+                    <li><a href="#" style="text-decoration: none; color: black;">Buy</a></li>
+                    <li><a href="#" style="text-decoration: none; color: black;">Rent</a></li>
+                </ul>
+             </div>
+            </div>
+            <input type="hidden" id="what" name="what" value="Buy">
+            <input type="text" name="locate" class="form-control awesomplete" list="mylist" data-minchars="1" id="srchl" placeholder="Enter Location" style="height: 50px;width: 500%;" required>
+            <datalist id="mylist">
+              <?php echo fill_city($connect);?>
+            </datalist>
+          </div>
+          <div class="collapse" id="collapseExample" align="left" style="margin-top: -20px;">
+            <div class="card card-body" style="color: black; cursor: default;">
+                <div class="form-group">
+                  <div class="form-row">
+                    <div class="col-md-12">
+                        <button class="close" id="coldis" type="button" aria-label="Close">
+                          <span aria-hidden="true">×</span>
+                        </button>
+                        <label style="font-size: 12px; font-weight: bold;">Property Type:</label><br>
+                            <div class="form-check" style="margin-right: 20px;">
+                              <label class="form-check-label" style="font-size: 13px;">
+                                <input class="form-check-input incheck" name="ptype[]" value="Residential" id="Residential" type="checkbox" style="font-size: 13px;"><b> Residential:</b></label>
+                            </div>
+                          <div class="form-group collapse" id="Residentialcolp" style="padding-left: 10px; margin:-10px 0px -5px 0px;">
+                            <div class="form-row" style="padding-left: 5px;">
+                              <div class="form-check" style="margin-right: 20px;">
+                                <label class="form-check-label" style="font-size: 13px;">
+                                  <input class="form-check-input res" value="Flat" name="psubtype[]" id="Flat" type="checkbox" style="font-size: 13px;"> Flat</label>
+                              </div>
+                              <div class="form-check" style="margin-right: 20px;">
+                                <label class="form-check-label" style="font-size: 13px;">
+                                  <input class="form-check-input res" value="House" name="psubtype[]" id="House" type="checkbox" style="font-size: 13px;">House</label>
+                              </div>
+                              <div class="form-check" style="margin-right: 20px;">
+                                <label class="form-check-label" style="font-size: 13px;">
+                                  <input class="form-check-input res" value="Plot" name="psubtype[]" id="Plot" type="checkbox" style="font-size: 13px;">Plot</label>
+                              </div>
+                          </div>
+                        </div>
+                            <div class="form-check" style="margin-right: 20px; margin-top: -10px;">
+                              <label class="form-check-label" style="font-size: 13px;">
+                                <input class="form-check-input incheck" name="ptype[]" value="Commercial" id="Commercial" type="checkbox" style="font-size: 13px;"><b> Commercial:</b></label>
+                            </div>
+                          <div class="form-group collapse" id="Commercialcolp" style="padding-left: 10px; margin:-10px 0px -5px 0px;">
+                            <div class="form-row" style="padding-left: 5px;">
+                              <div class="form-check" style="margin-right: 20px;">
+                                <label class="form-check-label" style="font-size: 13px;">
+                                  <input class="form-check-input com" value="Office" name="psubtype[]" id="Office" type="checkbox" style="font-size: 13px;">Office</label>
+                              </div>
+                              <div class="form-check" style="margin-right: 20px;">
+                                <label class="form-check-label" style="font-size: 13px;">
+                                  <input class="form-check-input com" value="Shop" name="psubtype[]" id="Shop" type="checkbox" style="font-size: 13px;">Shop</label>
+                              </div>
+                              <div class="form-check" style="margin-right: 20px;">
+                                <label class="form-check-label" style="font-size: 13px;">
+                                  <input class="form-check-input com" value="Commercial_Land" name="psubtype[]" id="Commercial_Land" type="checkbox" style="font-size: 13px;">Commercial Land</label>
+                              </div>
+                            <div class="form-check" style="margin-right: 20px;">
+                              <label class="form-check-label" style="font-size: 13px;">
+                                <input class="form-check-input com" value="Warehouse" name="psubtype[]" id="Warehouse" type="checkbox" style="font-size: 13px;">Warehouse</label>
+                            </div>
+                            <div class="form-check" style="margin-right: 20px;">
+                              <label class="form-check-label" style="font-size: 13px;">
+                                <input class="form-check-input com" value="Industrial_Building" name="psubtype[]" id="Industrial_Building" type="checkbox" style="font-size: 13px;">Industrial Building</label>
+                            </div>
+                          </div>
+                        </div>
+                            <div class="form-check" style="margin-right: 20px; margin-top: -10px;">
+                              <label class="form-check-label" style="font-size: 13px;">
+                                <input class="form-check-input incheck" name="ptype[]" value="Other" id="Other" type="checkbox" style="font-size: 13px;"><b> Other:</b></label>
+                            </div>
+                          <div class="form-group collapse" id="Othercolp" style="padding-left: 10px; margin:-10px 0px -5px 0px;">
+                            <div class="form-row" style="padding-left: 5px;">
+                              <div class="form-check" style="margin-right: 20px;">
+                                <label class="form-check-label" style="font-size: 13px;">
+                                  <input class="form-check-input oth" value="Agricultural_Land" name="psubtype[]" id="Agricultural_Land" type="checkbox" style="font-size: 13px;">Agricultural Land</label>
+                              </div>
+                              <div class="form-check" style="margin-right: 20px;">
+                                <label class="form-check-label" style="font-size: 13px;">
+                                  <input class="form-check-input oth" value="Farm_House" name="psubtype[]" id="Farm_House" type="checkbox" style="font-size: 13px;">Farm House</label>
+                              </div>
+                          </div>
+                        </div><br>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group" style="margin-top: -25px;">
+                  <hr style="margin-bottom: 10px; background-color: black;">
+                <div class="form-row">
+                <div class="col-md-5">
+                  <label style="font-size: 12px; font-weight: bold;">Budget:</label><br>
+                  <div id="range-value-2" style="float: right; font-size: 13px;"><i class="fa fa-inr" aria-hidden="true"></i> <span id="range-2"></span> lakhs</div>
+                  <div id="range-value-1" style="font-size: 13px;"><i class="fa fa-inr" aria-hidden="true"></i> <span id="range-1"></span> lakhs</div>
+                  <div id="range" style="margin-top: 10px; cursor: pointer;"></div>
+                </div>
+                  <input type="hidden" id="range-11" name="range-11" value="25">
+                  <input type="hidden" id="range-22" name="range-22" value="100">
+                <div class="col-md-2"></div>
+                <div class="col-md-5">
+                  <label style="font-size: 12px; font-weight: bold;">Area:</label><br>
+                  <div id="range-value-4" style="float: right; font-size: 13px;"><span id="range-4"></span> sq.ft</div>
+                  <div id="range-value-3" style="font-size: 13px;"><span id="range-3"></span> sq.ft</div>
+                  <div id="range1" style="margin-top: 10px; cursor: pointer;"></div>
+                </div>
+                  <input type="hidden" id="range-33" name="range-33" value="20">
+                  <input type="hidden" id="range-44" name="range-44" value="80">
+                </div>
+                </div>
+                <div class="row">
+                <div class="col-md-6" style="margin-top: 30px;">
+                <a class="btn btn-success btn-block" id="simsrch">Search</a>
+                </div>
+                <div class="col-md-6" style="margin-top: 30px;">
+                <a class="btn btn-warning btn-block" id="mapsrch">Map Search</a>
+                </div>
+                </div>
+              </form>
+            </div>
+          </div>  
+          </div>
+          </div>
+        </div>
+      <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+      </a>
+      <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+      </a>
+    </div>
+  </section>
+    <section id="services" style="padding-top: 80px;padding-bottom: 80px;">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12 text-center">
+            <h1 class="section-heading text-uppercase" data-aos="fade-down"><strong>Our Services</strong></h1>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6" style="margin-top:30px; padding-right:50px;" data-aos="fade-right">
+        <div class="card" style="width: 18rem; float:right;">
+          <img class="card-img-top" src="buy.jpg" alt="Card image cap" style="height: 220px;">
+          <div class="card-body">
+           <center><p class="card-text">Buy The Property You Like</p></center>
+          </div>
+        </div>
+          </div>
+          <div class="col-md-6" style="margin-top: 30px; padding-left:50px;" data-aos="fade-left">
+        <div class="card" style="width: 18rem;">
+          <img class="card-img-top" src="sell.jpg" alt="Card image cap" style="height: 220px; ">
+          <div class="card-body">
+            <center><p class="card-text">Sell Your Property At Fair Prices</p></center>
+          </div>
+        </div>
+          </div>
+				</div>
+				<div class="row">
+          <div class="col-md-6" style="margin-top: 30px; padding-right:50px;" data-aos="fade-right">
+        <div class="card" style="width: 18rem; float:right;">
+          <img class="card-img-top" src="rent.jpg" alt="Card image cap" style="height: 220px; ">
+          <div class="card-body">
+           <center><p class="card-text">Rent Your Property At Good Prices</p></center>
+          </div>
+        </div>
+          </div>
+          <div class="col-md-6" style="margin-top: 30px; padding-left:50px;" data-aos="fade-left">
+        <div class="card" style="width: 18rem;">
+          <img class="card-img-top" src="compare.jpg" alt="Card image cap" style="height: 220px;">
+          <div class="card-body">
+          <center><p class="card-text">Compare Between Different Properties</p></center>
+          </div>
+        </div>
+          </div>
+        </div>
+      </div>
+    </section>
+      <section id="tab" style="padding-top: 80px; padding-bottom: 80px; height: 100%; background-color: #008080;">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12 text-center">
+            <form>
+            <h1 class="section-heading text-uppercase" data-aos="fade-down"><strong>Get Newsletter Update</strong></h1>
+            <div class="col-md-8" style="float: left; margin-top: 30px;">
+            <input class="form-control" id="em" type="email" aria-describedby="emailHelp" placeholder="Enter email" required style="height: 70px;">
+            </div>
+            <div class="col-md-3" style="float: left; margin-top: 30px;">
+            <input id="sub" type="submit" class="btn btn-primary btn-block" value="Submit" style="height: 70px; cursor: pointer;"> 
+            </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+			
+			
+    <section id="aboutus" style="padding-top: 80px; padding-bottom: 80px;">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12 text-center" data-aos="fade-down">
+            <h1 class="section-heading text-uppercase"><strong>About Us</strong></h1>
+            <p style="color: white;">We provide the best results for your properties.</p>
+          </div>
+        </div>
+          <div class="card-group">
+            <div class="card" style="margin: 20px; border-radius: 5px" data-aos="flip-left">
+              <img class="card-img-top" src="mission.jpg" alt="Card image cap">
+              <div class="card-body">
+                <h5 class="card-title">Our Mission</h5>
+                <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+              </div>
+            </div>
+            <div class="card" style="margin: 20px; border-radius: 5px" data-aos="flip-left">
+              <img class="card-img-top" src="plan.jpg" alt="Card image cap">
+              <div class="card-body">
+                <h5 class="card-title">Our Plan</h5>
+                <p class="card-text">This card has supporting text below as a natural lead-in to additional content.</p>
+                <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+              </div>
+            </div>
+            <div class="card" style="margin: 20px; border-radius: 5px" data-aos="flip-left">
+              <img class="card-img-top" src="vision.jpg" alt="Card image cap">
+              <div class="card-body">
+                <h5 class="card-title">Our Vision</h5>
+                <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This card has even longer content than the first to show that equal height action.</p>
+                <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+              </div>
+            </div>
+          </div>
+      </div>
+    </section>
+			
+      <section id="tab" style="padding-top: 80px; padding-bottom: 80px; height: 100%; background-color: #008080;">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12 text-center">
+            <h1 class="section-heading text-uppercase" data-aos="fade-down"><strong>Find Us On</strong></h1>
+            <div>
+              <img src="logos/fb2.png" style="margin: 10px; height: 40px; width: 40px;">
+              <img src="logos/ttw.png" style="margin: 10px; height: 40px; width: 40px;">
+              <img src="logos/yt.png" style="margin: 10px; height: 40px; width: 40px;">
+              <img src="logos/g+.png" style="margin: 10px; height: 40px; width: 40px;">
+              <img src="logos/in2.png" style="margin: 10px; height: 40px; width: 40px;">
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    </div>
+    </div>
+    <!-- /.container-fluid-->
+    <!-- /.content-wrapper-->
+    <footer class="sticky-footer" style="width: 100%;">
+      <div class="container">
+        <div class="text-center">
+          <small>Copyright © PIXELINKZ 2018</small>
+        </div>
+      </div>
+    </footer>
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+      <i class="fa fa-angle-up"></i>
+    </a>
+
+
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Login</h5>
+            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+      <div class="card-body">
+        <form method="POST" id="logn">
+        <center><div id="error" class="badge badge-pill badge-danger"></div></center>          
+          <div class="form-group">
+            <label for="loguname">User Name</label>
+            <input class="form-control" id="logunmae" type="text" name="user" aria-describedby="emailHelp" placeholder="User Name" required>
+          </div>
+          <div class="form-group">
+            <label for="logpas">Password</label>
+            <input class="form-control" id="logpass" type="password" name="pass" placeholder="Password" required>
+          </div>
+          <div class="form-group">
+            <div class="form-check">
+              <label class="form-check-label">
+                <input class="form-check-input" type="checkbox"> Remember Password</label>
+            </div>
+          </div>
+          <input id="log" type="submit" class="btn btn-primary btn-block" style="cursor: pointer;" value="LogIN"/>
+        </form>
+        <div class="text-center">
+          <a class="d-block small mt-3" href="#" data-toggle="modal" data-target="#exampleModal2" data-dismiss="modal">Register an Account</a>
+          <a class="d-block small" href="#" data-toggle="modal" data-target="#exampleModal3" data-dismiss="modal">Forgot Password?</a>
+        </div>
+      </div>
+        </div>
+      </div>
+    </div>
+
+
+     <div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModal2Label" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Register</h5>
+            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+		      <div class="card-body">
+		        <form method="POST" id="reg">
+              <center><div id="regerror" class="badge badge-pill badge-danger"></div></center> 
+		          <div class="form-group">
+		            <div class="form-row">
+		              <div class="col-md-12">
+		                <label for="exampleInputName">Name</label>
+		                <input class="form-control" type="text" aria-describedby="nameHelp" id="regname" placeholder="Enter Name" required>
+		              </div>
+		            </div>
+		          </div>
+		          <div class="form-group">
+		            <label for="reguname">Username</label>
+		            <input class="form-control" type="text" aria-describedby="emailHelp" id="reguname" placeholder="Enter Username" required>
+		          </div>
+              <div class="form-group">
+                <label for="regemail">Email</label>
+                <input class="form-control" id="regemail" type="email" aria-describedby="emailHelp" placeholder="Enter email address" required>
+              </div>
+              <div class="form-group">
+								<label for="regcat">Category</label>
+                <select class="form-control" id="regcat">
+									<option value="Seller">Seller</option>
+									<option value="Buyer">Buyer</option>
+								</select>
+              </div>
+		          <div class="form-group">
+		            <div class="form-row">
+		              <div class="col-md-6">
+		                <label for="regpass">Password</label>
+		                <input class="form-control"  type="password" placeholder="Password" id="regpass" required>
+		              </div>
+		              <div class="col-md-6">
+		                <label for="regcpass">Confirm password</label>
+		                <input class="form-control" type="password" placeholder="Confirm password" id="regcpass" required>
+		              </div>
+		            </div>
+		          </div>
+		          <input id="regbtn" type="submit" class="btn btn-primary btn-block" style="cursor: pointer;" value="Register"/>
+		        </form>
+		        <div class="text-center">
+		          <a class="d-block small mt-3" href="#" data-toggle="modal" data-target="#exampleModal" data-dismiss="modal">Already Registered?   Login</a>
+		        </div>
+		      </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="modal fade" id="exampleModal3" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Reset Password</h5>
+            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+	      <div class="card-body">
+	        <div class="text-center mt-4 mb-5">
+	          <h4>Forgot your password?</h4>
+	          <p>Enter your email address and we will send you instructions on how to reset your password.</p>
+	        </div>
+	        <form method="POST" id="fog">
+            <center>
+              <div id="fogerror" class="badge badge-pill badge-danger"></div>
+            </center> <br>
+	          <div class="form-group">
+	            <input class="form-control" id="fogemail" type="email" aria-describedby="emailHelp" placeholder="Enter registered email address" required>
+	          </div>
+	          <input id="fogbtn" type="submit" class="btn btn-primary btn-block" style="cursor: pointer;" value="Reset Password"/>
+	        </form>
+	        <div class="text-center">
+	          <a class="d-block small mt-3" href="#" data-toggle="modal" data-target="#exampleModal2" data-dismiss="modal">Register an Account</a>
+	          <a class="d-block small" href="#" data-toggle="modal" data-target="#exampleModal" data-dismiss="modal">Login Page</a>
+	        </div>
+	      </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="aos.js"></script>
+    <script>
+      AOS.init({
+        easing: 'ease-in-out-sine'
+      });
+    </script>
+
+  <script src="myjs.js"></script>
+    <!-- Bootstrap core JavaScript-->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- Core plugin JavaScript-->
+    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+    <!-- Page level plugin JavaScript-->
+    <script src="vendor/chart.js/Chart.min.js"></script>
+    <script src="vendor/datatables/jquery.dataTables.js"></script>
+    <script src="vendor/datatables/dataTables.bootstrap4.js"></script>
+    <!-- Custom scripts for all pages-->
+    <script src="js/sb-admin.min.js"></script>
+    <!-- Custom scripts for this page-->
+    <script src="js/sb-admin-datatables.min.js"></script>
+    <script src="js/sb-admin-charts.min.js"></script>
+</body>
+
+</html>

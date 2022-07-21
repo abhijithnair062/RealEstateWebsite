@@ -1,0 +1,135 @@
+<!--<?php
+  session_start();
+  if($_SERVER['REQUEST_METHOD'] == 'POST')
+  {
+  $_SESSION['Pur_rate']=$_POST['Pur_rate'];
+  $_SESSION['Pur_amt']=$_POST['Pur_amt'];
+  $_SESSION['Market_rate']=$_POST['Market_rate'];
+  $_SESSION['Sale_rate']=$_POST['Sale_rate'];
+  $_SESSION['Sale_amt']=$_POST['Sale_amt'];
+
+  $con=mysqli_connect("localhost:3308","root","","pixelinkz");
+  $sql0="select max(PersonID) from person";
+  $result0=$con->query($sql0);
+  while($row=$result0->fetch_assoc()){
+    $pid=$row['max(PersonID)']+1;
+  } 
+  $cmnt='This is property';
+  $eid=$_SESSION['emailID'];
+  $fn=$_SESSION['firstname'];
+  $sn=$_SESSION['secondame'];
+  $cat=$_SESSION['category'];
+  $mn=(int)$_SESSION['mobile_no'];
+  $pn=(int)$_SESSION['phone_no'];
+  $an=(int)$_SESSION['addhaar_no'];
+  $pan=$_SESSION['pan_no'];
+
+
+  $sql1="select CityID from city where CityName='".$_SESSION['city']."'";
+  $result1=$con->query($sql1);
+  while($row=$result1->fetch_assoc()){
+    $_SESSION['CityID']=$row['CityID'];
+    $cid=$row['CityID'];
+  }
+
+
+  $sql2="select max(PropertyID) from property";
+  $result2=$con->query($sql2);
+  while($row=$result2->fetch_assoc()){
+    $prid=$row['max(PropertyID)']+1;
+  }
+
+  $sql3="select TypeID from propertytype where TypeName='".$_SESSION['ptype']."'";
+  $result3=$con->query($sql3);
+  while($row=$result3->fetch_assoc()){
+    $_SESSION['TypeID']=$row['TypeID'];
+  }
+
+  $sql4="select SubTypeID from propertysubtype where SubTypeName='".$_SESSION['psubtype']."'";
+  $result4=$con->query($sql4);
+  while($row=$result4->fetch_assoc()){
+    $_SESSION['SubTypeID']=$row['SubTypeID'];
+  }  
+ 
+  $sql ='INSERT INTO person (PersonID,Name,PhoneNo,PanNo,Comment,emailID,AadhaarNo,MobileNo,CityID)
+  VALUES('.$pid.',"'.$fn.'",'.$pn.',"'.$pan.'","'.$cmnt.'","'.$eid.'",'.$an.','.$mn.','.$cid.')';
+  $con->query($sql);
+
+  $target = "../../images/".$prid.".jpg";
+  move_uploaded_file($_FILES['primg']['tmp_name'], $target);
+  $imgpath="images/".$prid.".jpg";
+
+  $sql5 ='INSERT INTO property (PropertyID,Title,Address1,Address2,CityID,TypeID,SubTypeID,SurveyNo,PlotNo,CTSNo,PropertyArea,Comment,PinCode,PurchaseRate,PurchaseAmount,MarketRate,SaleRate,SaleAmount,BuiltUpArea,SuperBuiltUpArea,image)
+  VALUES('.(int)$prid.',"'.$_SESSION["pr_title"].'","'.$_SESSION["address1"].'","'.$_SESSION["address2"].'",'.(int)$_SESSION["CityID"].','.(int)$_SESSION["TypeID"].','.(int)$_SESSION["SubTypeID"].','.(int)$_SESSION["Survey_no"].','.(int)$_SESSION["Plot_no"].','.(int)$_SESSION["cts_no"].','.(double)$_SESSION["carea"].',"'.$cmnt.'",'.(int)$_SESSION["pincode"].','.(double)$_SESSION["Pur_rate"].','.(double)$_SESSION["Pur_amt"].','.(double)$_SESSION["Market_rate"].','.(double)$_SESSION["Sale_rate"].','.(double)$_SESSION["Sale_amt"].','.(double)$_SESSION["barea"].','.(double)$_SESSION["s_b_area"].',"'.$imgpath.'")';
+  $con->query($sql5);
+
+
+  echo "<script>window.location.href='../../desc.php?prid=".$prid."'</script>";
+  }
+?>-->
+
+<html>
+<head>
+<title>Sell page</title>
+<link rel="stylesheet" type="text/css" href="form.css">
+<link rel="stylesheet" href="style.css">
+<meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">Sell: Please fill in your details</a>
+    </div>
+    <ul class="nav navbar-nav">
+      <li class="active"><a href="mmm.html">E-mail and other</a></li>
+      <li class="active"><a href="#">Address Details</a></li>
+      <li class="active"><a href="#">Property info</a></li>
+      <li class="active"><a href="#">Property features</a></li>
+	  <li class="active"><a href="#">Area Details</a></li>
+	  <li class="active"><a href="#">Price Details</a></li>
+    </ul>
+  </div>
+</nav> 
+ <div class="sixth-sec">
+   <center><h3 style="font-family:verdana">Price Details</h3>
+   <hr style="width: 50%; height: 8px; display: block; margin: 0 auto; border: none; box-shadow: 3px 3px 6px #0e0e0e; background-color: #898989"/><br><br>
+<form method="post" enctype="multipart/form-data" action="sss6.php">    
+   <div class="input-group">     
+     <input type="text" style="width:100%" name="Pur_rate" placeholder="Enter Purchase Rate" ></div>
+   </br></br>
+   
+   <div class="input-group">     
+     <input type="text" style="width:100%" name="Pur_amt" placeholder="Enter Purchase Amount" ></div>
+   </br></br>
+   
+   <div class="input-group">     
+     <input type="text" style="width:100%" name="Market_rate" placeholder="Enter Market Rate" ></div>
+   </br></br>
+   
+   <div class="input-group">     
+     <input type="text" style="width:100%" name="Sale_rate" placeholder="Enter sale Rate" ></div>
+   </br></br>
+   
+   <div class="input-group">     
+     <input type="text" style="width:100%" name="Sale_amt" placeholder="Enter Sale Amount" ></div>
+   </br></br></br></br>
+
+  <label style="font-size: 20px; margin-bottom: 20px;">Upload Image:</label>
+  <div class="input-group">
+    <input type="file" id="add2" name="primg" style="float:left; width:100%; height: 40px; background-color: green;" required/>
+  </div><br><br>
+  <div class="input-group" style="margin-top: 20px;">
+  <input type="Submit" value="Post Ad" class="button"/>  
+  </div> 
+</form>
+
+  </body>
+  <script src="myjs1.js"></script>
+</html>  
+
+  

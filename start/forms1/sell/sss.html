@@ -1,0 +1,229 @@
+<?php
+  session_start();
+  if($_SERVER['REQUEST_METHOD'] == 'POST')
+  {
+  $_SESSION['firstname']=$_POST['firstname'];
+  $_SESSION['secondame']=$_POST['secondame'];
+  $_SESSION['category']=$_POST['category'];
+  $_SESSION['mobile_no']=$_POST['mobile_no'];
+  $_SESSION['phone_no']=$_POST['phone_no'];
+  $_SESSION['addhaar_no']=$_POST['addhaar_no'];
+  $_SESSION['pan_no']=$_POST['pan_no'];
+  echo "<script>
+  window.location.href ='sss2.php';
+  </script>";
+  } 
+?>
+
+<html>
+<head>
+<title>Sell Form</title>
+<link rel="stylesheet" type="text/css" href="form.css">
+<link rel="stylesheet" href="style.css">
+<meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <?php
+    if(!isset($_SESSION['login'])){
+      echo '<script>$(document).ready(function(){
+        $("#exampleModal2").modal("show");
+      });</script>';
+    }
+  ?>
+  <script>
+    function validation()
+	{
+	       var x = document.forms["myForm"]["firstnamename"].value;
+    if (x == "") {
+        alert("Name must be filled out");
+        return false;
+    }
+	}
+  </script>
+</head>
+<body>
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="../../index.php">PIXELINKZ</a>
+    </div>
+    <ul class="nav navbar-nav">
+      <li class="active"><a href="#">E-mail and other</a></li>
+      <li class="not-active"><a href="#">Address Details</a></li>
+      <li class="not-active"><a href="#">Property info</a></li>
+      <li class="not-active"><a href="#">Property features</a></li>
+	  <li class="not-active"><a href="#">Area Details</a></li>
+	  <li class="not-active"><a href="#">Price Details</a></li>
+    </ul>
+    <ul class="nav navbar-nav navbar-right">
+    <?php if(isset($_SESSION['login'])): ?>
+    <li style="color: white; font-size: 18px; padding: 10px;"><?=$_SESSION['message']?></li>
+    <?php endif; ?>
+    </ul>
+  </div>
+</nav>
+<div class="second-sec">
+<center><h3 style="font-family:verdana">E-mail ID and other details</h3><br><hr style="width: 50%; height: 8px; display: block; margin: 0 auto; border: none; box-shadow: 3px 3px 6px #0e0e0e; background-color: #898989"/><br><br>
+</div><br><br>
+<div class="container" align="center">
+  <form name="myForm" method="post" action="sss.php">
+    <div class="input-group">
+      <input type="text" id="fname" name="firstname" placeholder="Your firstname.." style="float:left; width:100%" required/>
+    </div><br><br>
+    <div class="input-group">
+      <input type="text" id="fname" name="secondame" placeholder="Your lastname.." style="float:left; width:100%" required/>
+    </div><br><br>	 
+	 <div class="input-group">
+	         <select id="category" class="form-control" style="height:40px;border-radius:5px;" name="category">
+        <option selected disabled>Choose Category...</option>
+    <option value="Seller">Seller</option>
+    <option value="Buyer">Buyer</option>
+      </select>
+	 </div><br><br>
+     <div class="input-group">
+      <input type="number" id="mno" name="mobile_no" placeholder="Your mobile no.." style="float:left; width:100%;height:45px;border-radius:5px;" required/>
+    </div><br><br>
+	 <div class="input-group">
+      <input type="number" id="phno" name="phone_no" placeholder="Your phone no.." style="float:left; width:100%;height:45px;border-radius:5px;" required/>
+    </div><br><br>
+	 <div class="input-group">
+      <input type="text" id="addhaar_no" name="addhaar_no" placeholder="Your addhaar no.." style="float:left; width:100%" required/>
+    </div><br><br> <div class="input-group">
+      <input type="text" id="pan" name="pan_no" placeholder="Your Pan no.." style="float:left; width:100%" required/>
+    </div><br><br>
+	
+    <br>
+    <div class="input-group" style="margin-top: 30px;">
+  <input type="Submit" value="Next" class="button"/>  
+  </div>
+  </form>
+  <br>
+</div>
+
+
+
+</center>
+
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Login</h5>
+          </div>
+      <div class="card-body" style="padding: 20px;">
+        <form method="POST" id="logn">
+        <center><div id="error" class="badge badge-pill badge-danger"></div></center>          
+          <div class="form-group">
+            <label for="loguname">User Name</label>
+            <input class="form-control" id="logunmae" type="text" name="user" style="width: 100%; margin-bottom: 10px; padding-top:1px; padding-bottom:1px;" aria-describedby="emailHelp" placeholder="User Name" required>
+          </div>
+          <div class="form-group">
+            <label for="logpas">Password</label>
+            <input class="form-control" id="logpass" type="password" name="pass" placeholder="Password" required>
+          </div>
+          <div class="form-group">
+            <div class="form-check">
+              <label class="form-check-label">
+                <input class="form-check-input" type="checkbox"> Remember Password</label>
+            </div>
+          </div>
+          <input id="log" type="submit" class="btn btn-primary btn-block" style="cursor: pointer;" value="LogIN"/>
+        </form>
+        <div class="text-center">
+          <a class="d-block small mt-3" href="#" data-toggle="modal" data-target="#exampleModal2" data-dismiss="modal">Register an Account</a><br>
+          <a class="d-block small" href="#" data-toggle="modal" data-target="#exampleModal3" data-dismiss="modal">Forgot Password?</a>
+        </div>
+      </div>
+        </div>
+      </div>
+    </div>
+
+
+     <div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModal2Label" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Register</h5>
+          </div>
+          <div class="card-body" style="padding: 20px;">
+            <form method="POST" id="reg">
+              <center><div id="regerror" class="badge badge-pill badge-danger"></div></center> 
+              <div class="form-group">
+                <div class="form-row">
+                    <label for="exampleInputName">Name</label>
+                    <input class="form-control" type="text" aria-describedby="nameHelp" id="regname" style="width: 100%; margin-bottom: 10px; padding-top:1px; padding-bottom:1px;" placeholder="Enter Name" required>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="reguname">Username</label>
+                <input class="form-control" type="text" aria-describedby="emailHelp" id="reguname" style="width: 100%; margin-bottom: 10px; padding-top:1px; padding-bottom:1px;" placeholder="Enter Username" required>
+              </div>
+              <div class="form-group">
+                <label for="regemail">Email</label>
+                <input class="form-control" id="regemail" type="email" aria-describedby="emailHelp" placeholder="Enter email address" required>
+              </div>
+              <div class="form-group">
+                <label for="regcat">Category</label>
+                <select class="form-control" id="regcat">
+                  <option value="Seller">Seller</option>
+                  <option value="Buyer">Buyer</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <div class="form-row">
+                  <div class="col-md-6">
+                    <label for="regpass">Password</label>
+                    <input class="form-control"  type="password" placeholder="Password" style="margin-bottom: 10px;" id="regpass" required>
+                  </div>
+                  <div class="col-md-6">
+                    <label for="regcpass">Confirm password</label>
+                    <input class="form-control" type="password" placeholder="Confirm password" id="regcpass" required>
+                  </div>
+                </div>
+              </div>
+              <input id="regbtn" type="submit" class="btn btn-primary btn-block" style="cursor: pointer;" value="Register"/>
+            </form>
+            <div class="text-center">
+              <a class="d-block small mt-3" href="#" data-toggle="modal" data-target="#exampleModal" data-dismiss="modal">Already Registered?   Login</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="modal fade" id="exampleModal3" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Reset Password</h5>
+          </div>
+        <div class="card-body" style="padding: 20px;">
+          <div class="text-center mt-4 mb-5">
+            <h4>Forgot your password?</h4>
+            <p>Enter your email address and we will send you instructions on how to reset your password.</p>
+          </div>
+          <form method="POST" id="fog">
+            <center>
+              <div id="fogerror" class="badge badge-pill badge-danger"></div>
+            </center> <br>
+            <div class="form-group">
+              <input class="form-control" id="fogemail" type="email" aria-describedby="emailHelp" placeholder="Enter registered email address" required>
+            </div>
+            <input id="fogbtn" type="submit" class="btn btn-primary btn-block" style="cursor: pointer;" value="Reset Password"/>
+          </form>
+          <div class="text-center">
+            <a class="d-block small mt-3" href="#" data-toggle="modal" data-target="#exampleModal2" data-dismiss="modal">Register an Account</a><br>
+            <a class="d-block small" href="#" data-toggle="modal" data-target="#exampleModal" data-dismiss="modal">Login Page</a>
+          </div>
+        </div>
+        </div>
+      </div>
+    </div>
+</body>
+
+<script src="myjs1.js"></script>
+</html>
